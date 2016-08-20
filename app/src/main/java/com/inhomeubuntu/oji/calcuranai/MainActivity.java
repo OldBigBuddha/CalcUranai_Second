@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity {
                         nameTotal_double = calc(name1_double, name2_double);
                         nameTotal_long   = Math.round(nameTotal_double * 100);
                         textResult.setText(nameTotal_long + "%");
+                        changeTextColor(nameTotal_long);
                         resultButton.setText("もう一回!!");
 
                         hideKeybord(view);
@@ -71,6 +72,7 @@ public class MainActivity extends AppCompatActivity {
                         name2_Edit.setText("");
                         resultButton.setText("占う！");
                         textResult.setText(result_Str);
+                        changeTextColor(101);
                         name1_Edit.requestFocus();
 
                         isUranai = false;
@@ -100,51 +102,6 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-//    public void onCalc(View view) {
-//
-//        //        EditTextに入力された名前を取得
-//        name1_Str = name1_Edit.getText().toString();
-//        name2_Str = name2_Edit.getText().toString();
-//
-//        if (name1_Str != null && name2_Str != null) {
-//
-//            if (!isUranai) {
-//
-//                name1_double = convert(name1_Str);
-//                name2_double = convert(name2_Str);
-//
-//                calc(name1_double, name2_double);
-//                nameTotal_long = Math.round(nameTotal_double * 100);
-//
-//                textResult.setTextColor(Color.parseColor("#DD8B91"));
-//                textResult.setText(nameTotal_long + "%");
-//
-//                isUranai = true;
-//
-//                linearLayout.requestFocus();
-//                resultButton.setText("もう一回!");
-//
-//                name1_Edit.setText("");
-//                name2_Edit.setText("");
-//            } else if (isUranai) {
-//                name1_Edit.requestFocus();
-//                textResult.setText(result_Str);
-//                resultButton.setText("占う！");
-//                isUranai = false;
-//            }
-//        }else if (name1_Str == null) {
-////            name1_Edit.requestFocus();
-////            Snackbar.make(linearLayout,"一人目の名前を入れてないよ", Snackbar.LENGTH_SHORT).show();
-//        }else if (name2_Str == null) {
-////            name2_Edit.requestFocus();
-////            Snackbar.make(linearLayout,"ニ人目の名前を入れてないよ", Snackbar.LENGTH_SHORT).show();
-//        }else {
-////            name1_Edit.requestFocus();
-////            Snackbar.make(linearLayout,"どっちも入力してないよ",Snackbar.LENGTH_SHORT).show();
-//        }
-//
-//    }
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         MenuInflater menuInflater = getMenuInflater();
@@ -158,7 +115,7 @@ public class MainActivity extends AppCompatActivity {
         final int ID = item.getItemId();
 
         if (ID == R.id.actionFinish) {
-            finish();
+            this.finish();
         }
 
         return super.onOptionsItemSelected(item);
@@ -177,8 +134,6 @@ public class MainActivity extends AppCompatActivity {
         name = name.replaceAll("[^0-5]","");
 
         nameNumber = Integer.parseInt(name);
-
-//        Toast.makeText(this, name,Toast.LENGTH_SHORT).show();
 
         return nameNumber;
     }
@@ -199,5 +154,21 @@ public class MainActivity extends AppCompatActivity {
     private void hideKeybord(View view) {
         InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    private void changeTextColor(long compatibility) {
+
+        if (compatibility < 30) {
+            textResult.setTextColor(Color.parseColor("#44617B"));
+        }else if (compatibility < 70) {
+            textResult.setTextColor(Color.parseColor("#CD5E3C"));
+        }else if (compatibility <= 100) {
+            textResult.setTextColor(Color.parseColor("#D7003A"));
+            //TODO:画面遷移
+        }else {
+            textResult.setTextColor(Color.parseColor("#F6E3E5"));
+        }
+
+
     }
 }
