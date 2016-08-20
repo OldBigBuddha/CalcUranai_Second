@@ -14,6 +14,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -43,6 +44,53 @@ public class MainActivity extends AppCompatActivity {
         text2           = (TextView)findViewById(R.id.text2);
         textResult      = (TextView) findViewById(R.id.viewResult);
 
+        resultButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                name1_Str = name1_Edit.getText().toString();
+                name2_Str = name2_Edit.getText().toString();
+
+                if (!name1_Str.equals("") && !name2_Str.equals("")) {
+
+                    if (!isUranai) {
+
+                        name1_double = convert(name1_Str);
+                        name2_double = convert(name2_Str);
+
+                        nameTotal_double = calc(name1_double, name2_double);
+                        nameTotal_long   = Math.round(nameTotal_double * 100);
+                        textResult.setText(nameTotal_long + "%");
+                        resultButton.setText("もう一回!!");
+
+                        hideKeybord(view);
+
+                        text1.requestFocus();
+                        isUranai = true;
+                    }else if (isUranai) {
+                        name1_Edit.setText("");
+                        name2_Edit.setText("");
+                        resultButton.setText("占う！");
+                        textResult.setText(result_Str);
+                        name1_Edit.requestFocus();
+
+                        isUranai = false;
+                    }
+                }else if ( name1_Str.equals("") && !name2_Str.equals("")) {
+                    hideKeybord(view);
+                    Snackbar.make(name2_Edit, "一人目の名前を入力してないよ", Snackbar.LENGTH_SHORT).show();
+                    name1_Edit.requestFocus();
+                }else if (!name1_Str.equals("") &&  name2_Str.equals("")) {
+                    hideKeybord(view);
+                    Snackbar.make(name2_Edit, "二人目の名前を入力してないよ", Snackbar.LENGTH_SHORT).show();
+                    name2_Edit.requestFocus();
+                }else {
+                    hideKeybord(view);
+                    Snackbar.make(name2_Edit, "名前を入力してないよ", Snackbar.LENGTH_SHORT).show();
+                    name1_Edit.requestFocus();
+                }
+            }
+        });
+
         result_Str = "???%";
         textResult.setText(result_Str);
         resultButton.setText("占う！");
@@ -52,53 +100,50 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
-    public void onCalc(View view) {
-
-        //        EditTextに入力された名前を取得
-        name1_Str = name1_Edit.getText().toString();
-        name2_Str = name2_Edit.getText().toString();
-
-        if (name1_Str != null && name2_Str != null) {
-
-            if (!isUranai) {
-
-                name1_double = convert(name1_Str);
-                name2_double = convert(name2_Str);
-
-                calc(name1_double, name2_double);
-                nameTotal_long = Math.round(nameTotal_double * 100);
-
-                InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-
-                textResult.setTextColor(Color.parseColor("#DD8B91"));
-                textResult.setText(nameTotal_long + "%");
-
-                isUranai = true;
-
-                linearLayout.requestFocus();
-                resultButton.setText("もう一回!");
-
-                name1_Edit.setText("");
-                name2_Edit.setText("");
-            } else if (isUranai) {
-                name1_Edit.requestFocus();
-                textResult.setText(result_Str);
-                resultButton.setText("占う！");
-                isUranai = false;
-            }
-        }else if (name1_Str == null) {
-//            name1_Edit.requestFocus();
-//            Snackbar.make(linearLayout,"一人目の名前を入れてないよ", Snackbar.LENGTH_SHORT).show();
-        }else if (name2_Str == null) {
-//            name2_Edit.requestFocus();
-//            Snackbar.make(linearLayout,"ニ人目の名前を入れてないよ", Snackbar.LENGTH_SHORT).show();
-        }else {
-//            name1_Edit.requestFocus();
-//            Snackbar.make(linearLayout,"どっちも入力してないよ",Snackbar.LENGTH_SHORT).show();
-        }
-
-    }
+//    public void onCalc(View view) {
+//
+//        //        EditTextに入力された名前を取得
+//        name1_Str = name1_Edit.getText().toString();
+//        name2_Str = name2_Edit.getText().toString();
+//
+//        if (name1_Str != null && name2_Str != null) {
+//
+//            if (!isUranai) {
+//
+//                name1_double = convert(name1_Str);
+//                name2_double = convert(name2_Str);
+//
+//                calc(name1_double, name2_double);
+//                nameTotal_long = Math.round(nameTotal_double * 100);
+//
+//                textResult.setTextColor(Color.parseColor("#DD8B91"));
+//                textResult.setText(nameTotal_long + "%");
+//
+//                isUranai = true;
+//
+//                linearLayout.requestFocus();
+//                resultButton.setText("もう一回!");
+//
+//                name1_Edit.setText("");
+//                name2_Edit.setText("");
+//            } else if (isUranai) {
+//                name1_Edit.requestFocus();
+//                textResult.setText(result_Str);
+//                resultButton.setText("占う！");
+//                isUranai = false;
+//            }
+//        }else if (name1_Str == null) {
+////            name1_Edit.requestFocus();
+////            Snackbar.make(linearLayout,"一人目の名前を入れてないよ", Snackbar.LENGTH_SHORT).show();
+//        }else if (name2_Str == null) {
+////            name2_Edit.requestFocus();
+////            Snackbar.make(linearLayout,"ニ人目の名前を入れてないよ", Snackbar.LENGTH_SHORT).show();
+//        }else {
+////            name1_Edit.requestFocus();
+////            Snackbar.make(linearLayout,"どっちも入力してないよ",Snackbar.LENGTH_SHORT).show();
+//        }
+//
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -149,5 +194,10 @@ public class MainActivity extends AppCompatActivity {
 
         return  nameTotal_double;
 
+    }
+
+    private void hideKeybord(View view) {
+        InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 }
