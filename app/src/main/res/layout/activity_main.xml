@@ -1,50 +1,95 @@
 <LinearLayout
     android:id="@+id/linerLayout"
+    android:background="#F6E3E5"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <EditText
-        android:id="@+id/name1_edit"
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/name1_TextInput"
+        android:theme="@style/EditTextHint"
+        app:theme="@style/TextInputStyle"
+        android:focusableInTouchMode="true"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:layout_margin="16dp"
-        android:singleLine="true" />
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="24dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="8dp"
+        >
 
-    <EditText
-        android:id="@+id/name2_edit"
+        <EditText
+            android:id="@+id/name1_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="占いたい人の名前を入力してね(ローマ字orひらがな)"
+            android:inputType="text"
+            android:singleLine="true"
+            style="@style/EditTextStyle"
+            android:theme="@style/EditTextStyle"/>
+
+
+    </android.support.design.widget.TextInputLayout>
+
+    <android.support.design.widget.TextInputLayout
+        android:id="@+id/name2_TextInput"
+        app:theme="@style/TextInputStyle"
+        app:hintTextAppearance="@style/EditTextHint"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:inputType="text"
-        android:layout_margin="16dp"
-        android:singleLine="true" />
+        android:layout_marginLeft="16dp"
+        android:layout_marginTop="8dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp">
+
+        <EditText
+            android:id="@+id/name2_edit"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="占いたい人の名前を入力してね(ローマ字orひらがな)"
+            android:inputType="text"
+            android:singleLine="true"
+            style="@style/EditTextStyle"
+            android:theme="@style/EditTextStyle" />
+
+
+    </android.support.design.widget.TextInputLayout>
 
     <Button
         android:id="@+id/diagnosisButton"
         android:onClick="onCalc"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="診断"
+        android:text="占う!"
         android:textSize="50dp"
         android:layout_margin="24dp"
         android:layout_gravity="center_horizontal"
         android:paddingLeft="30dp"
-        android:paddingRight="30dp" />
+        android:paddingRight="30dp"
+        android:background="#B4586A"
+        android:textColor="#A0CDE8" />
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
+        android:gravity="bottom"
         android:layout_margin="16dp">
 
         <TextView
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:id="@+id/text1"
+            android:textColor="#302833"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="二人の相性は・・・"
-            android:textSize="35dp" />
+            android:textSize="35dp" >
+            <requestFocus />
+        </TextView>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -57,11 +102,13 @@
                 android:text="100%"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="80dp" />
+                android:textSize="80dp"
+                android:textColor="#302833" />
 
             <TextView
                 android:id="@+id/text2"
                 android:text="です!!"
+                android:textColor="#302833"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="34dp"
