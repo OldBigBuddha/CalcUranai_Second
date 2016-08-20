@@ -3,9 +3,12 @@
     <color name="colorPrimary">#3F51B5</color>
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
+    
+    <color name="start_color">#F6BFBC</color>
+    <color name="end_color">#DEB068</color>
 
     <color name="editTextNormal">#69821B</color>
-    <color name="editTextHint">#C3D825</color>
+    <color name="editTextHint">#C3DF25</color>
     <color name="editTextText">#D7003A</color>
 
 </resources>
