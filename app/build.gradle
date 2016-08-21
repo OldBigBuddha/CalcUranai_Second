@@ -9,7 +9,7 @@ android {
         minSdkVersion 21
         targetSdkVersion 22
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.1"
     }
     buildTypes {
         release {
@@ -34,7 +34,8 @@ android {
             variant.outputs.each { output ->
                 if (output.outputFile != null && output.outputFile.name.endsWith('.apk')) {
                     // Rename APK
-                    def newName = "calcUranai.apk"
+                    def versionName   = defaultConfig.versionName
+                    def newName       = "calcUranai_v${versionName}.apk"
                     output.outputFile = new File(output.outputFile.parent, newName)
                 }
             }
