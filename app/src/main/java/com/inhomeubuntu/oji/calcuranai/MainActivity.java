@@ -1,6 +1,7 @@
 package com.inhomeubuntu.oji.calcuranai;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Color;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,9 @@ import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -25,9 +29,12 @@ public class MainActivity extends AppCompatActivity {
     private Button resultButton;
 
     private String name1_Str, name2_Str, result_Str;
-    private double name1_double, name2_double, nameTotal_double;
-    private long nameTotal_long;
     private boolean isUranai = false;
+
+    private BigDecimal bigDecimalName1, bigDecimalName2, bigDecimalName;
+    private final BigDecimal TWO = new BigDecimal("2");
+    private final BigDecimal HANDRED = new BigDecimal("100");
+    private final int ZERO = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,13 +60,13 @@ public class MainActivity extends AppCompatActivity {
 
                     if (!isUranai) {
 
-                        name1_double = convert(name1_Str);
-                        name2_double = convert(name2_Str);
+                        bigDecimalName1 = convert(name1_Str);
+                        bigDecimalName2 = convert(name2_Str);
+                        calc(bigDecimalName1, bigDecimalName2);
 
-                        nameTotal_double = calc(name1_double, name2_double);
-                        nameTotal_long   = Math.round(nameTotal_double * 100);
-                        textResult.setText(nameTotal_long + "%");
-                        changeTextColor(nameTotal_long);
+                        bigDecimalName = bigDecimalName.multiply(HANDRED);
+                        textResult.setText(bigDecimalName.toString() + "%");
+                        changeTextColor(Integer.parseInt(bigDecimalName.setScale(ZERO, RoundingMode.DOWN).toString()));
                         resultButton.setText("もう一回!!");
 
                         hideKeybord(view);
@@ -120,9 +127,9 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public double convert(String name) {
+    private BigDecimal convert(String name) {
 
-        double nameNumber;
+        BigDecimal nameNumber;
 
         name = name.replaceAll("[aA(きゃ)(しゃ)(ちゃ)(にゃ)(ひゃ)(みゃ)(りゃ)あかさたなはまやらわがざだばぱ]","1");
         name = name.replaceAll("[iIいきしちにひみりぎじぢびぴ]","2");
@@ -132,21 +139,23 @@ public class MainActivity extends AppCompatActivity {
         name = name.replaceAll("[(nn)ん]","0");
         name = name.replaceAll("[^0-5]","");
 
-        nameNumber = Integer.parseInt(name);
+        nameNumber = new BigDecimal(name);
 
         return nameNumber;
     }
 
-    private double calc(double name1_double, double name2_double) {
+    private void calc(BigDecimal name1, BigDecimal name2) {
+        bigDecimalName = name1.add(name2);
+        BigDecimal judge_big = bigDecimalName.setScale(0,RoundingMode.DOWN);
 
-     nameTotal_double = name1_double + name2_double;
+        long judge = Long.parseLong(judge_big.toString());
 
-        while ((int)nameTotal_double > 0) {
-            nameTotal_double /= 2;
+        while (judge > 0) {
+            bigDecimalName = bigDecimalName.divide(TWO, 1, RoundingMode.HALF_UP);
+            judge_big = bigDecimalName.setScale(ZERO,RoundingMode.DOWN);
+            judge = Long.parseLong(judge_big.toString());
         }
         isUranai = true;
-
-        return  nameTotal_double;
 
     }
 
@@ -155,7 +164,7 @@ public class MainActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
-    private void changeTextColor(long compatibility) {
+    private void changeTextColor(double compatibility) {
 
         if (compatibility < 30) {
             textResult.setTextColor(Color.parseColor("#44617B"));
@@ -164,6 +173,9 @@ public class MainActivity extends AppCompatActivity {
         }else if (compatibility <= 100) {
             textResult.setTextColor(Color.parseColor("#D7003A"));
             //TODO:画面遷移
+            Intent intent = new Intent(this,SecretActivity.class);
+            intent.putExtra("name1", name1_Str);
+            intent.putExtra("name2", name2_Str);
         }else {
             textResult.setTextColor(Color.parseColor("#F6E3E5"));
         }
