@@ -179,7 +179,8 @@ public class MainActivity extends AppCompatActivity {
         }else {
             textResult.setTextColor(Color.parseColor("#F6E3E5"));
         }
-
-
     }
+
+
+
 }

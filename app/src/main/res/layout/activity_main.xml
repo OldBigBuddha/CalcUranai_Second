@@ -28,6 +28,7 @@
             android:hint="占いたい人の名前を入力してね(ローマ字orひらがな)"
             android:inputType="text"
             android:singleLine="true"
+            android:textColorHint="@color/editTextHint"
             style="@style/EditTextStyle"
             android:theme="@style/EditTextStyle" />
 
@@ -53,70 +54,71 @@
             android:inputType="text"
             android:singleLine="true"
             style="@style/EditTextStyle"
+            android:textColorHint="@color/editTextHint"
             android:theme="@style/EditTextStyle" />
 
 
     </android.support.design.widget.TextInputLayout>
 
-    <Button
-        android:id="@+id/diagnosisButton"
-        android:onClick="onCalc"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="占う!"
-        android:textSize="50dp"
-        android:layout_margin="24dp"
-        android:layout_gravity="center_horizontal"
-        android:paddingLeft="30dp"
-        android:paddingRight="30dp"
-        android:background="#B4586A"
-        android:textColor="#A0CDE8" />
-
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
+        android:layout_margin="16dp"
         android:gravity="bottom"
-        android:layout_margin="16dp">
+        android:orientation="vertical">
 
         <TextView
-            android:focusable="true"
-            android:focusableInTouchMode="true"
             android:id="@+id/text1"
-            android:textColor="#302833"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:focusable="true"
+            android:focusableInTouchMode="true"
             android:text="二人の相性は・・・"
-            android:textSize="35dp" >
+            android:textColor="#302833"
+            android:textSize="35sp">
+
             <requestFocus />
         </TextView>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:layout_margin="16dp">
+            android:layout_margin="16dp"
+            android:orientation="horizontal">
 
             <TextView
                 android:id="@+id/viewResult"
-                android:text="100.0%"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="70dp"
-                android:textColor="#F6E3E5" />
+                android:text="100.0%"
+                android:textColor="#F6E3E5"
+                android:textSize="70sp" />
 
             <TextView
                 android:id="@+id/text2"
-                android:text="です!!"
-                android:textColor="#302833"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="34dp"
-                android:layout_margin="8dp" />
+                android:layout_margin="8dp"
+                android:text="です!!"
+                android:textColor="#302833"
+                android:textSize="30sp" />
 
 
         </LinearLayout>
 
     </LinearLayout>
+
+    <Button
+        android:id="@+id/diagnosisButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="占う!"
+        android:textSize="50sp"
+        android:layout_margin="24dp"
+        android:layout_gravity="center_horizontal"
+        android:paddingLeft="30dp"
+        android:paddingRight="30dp"
+        android:background="#B4586A"
+        android:textColor="#A0CDE8" />
 
 </LinearLayout>
